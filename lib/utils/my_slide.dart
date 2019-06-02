@@ -8,12 +8,34 @@ class MySlide extends MaterialPageRoute {
   Widget buildTransitions(BuildContext context, Animation<double> animation,
       Animation<double> secondaryAnimation, Widget child) {
     Animation<Offset> custom =
-        Tween<Offset>(begin: Offset(1.0, 1.0), end: Offset(0.0, 0.0))
+        Tween<Offset>(begin: Offset(1.0, 0.0), end: Offset(0.0, 0.0))
             .animate(animation);
 //    return super
 //        .buildTransitions(context, animation, secondaryAnimation, child);
     return SlideTransition(position: custom, child: child);
   }
+}
+
+class MySlideDuration extends PageRouteBuilder {
+  Widget widget;
+
+  MySlideDuration({this.widget})
+      : super(
+          pageBuilder: (BuildContext context, Animation<double> animation,
+              Animation<double> secondaryAnimation) {
+            return widget;
+          },
+          transitionDuration: Duration(milliseconds: 250),
+          transitionsBuilder: (BuildContext context,
+              Animation<double> animation,
+              Animation<double> secondaryAnimation,
+              Widget child) {
+            Animation<Offset> custom =
+                Tween<Offset>(begin: Offset(1.0, 1.0), end: Offset(0.0, 0.0))
+                    .animate(animation);
+            return SlideTransition(position: custom, child: child);
+          },
+        );
 }
 
 //class SlideRightRoute extends PageRouteBuilder {

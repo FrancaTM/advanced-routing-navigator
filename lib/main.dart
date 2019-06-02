@@ -27,7 +27,8 @@ void main() {
 //            return SlideRightRoute(widget: HomePage());
             break;
           case '/second':
-            return MySlide(builder: (context) => SecondHome());
+            return MySlideDuration(widget: SecondHome());
+//            return MySlide(builder: (context) => SecondHome());
 //            return SlideRightRoute(widget: SecondHome());
             break;
         }
