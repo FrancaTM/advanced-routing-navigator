@@ -3,18 +3,30 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(
     MaterialApp(
-//      home: SecondHome(),
-      initialRoute: '/',
-      routes: <String, WidgetBuilder>{
-        '/': (context) => HomePage(),
-        '/second': (context) => SecondHome(),
-      },
-      onUnknownRoute: (RouteSettings settings) {
-        String unknownRoute = settings.name;
-        print(unknownRoute);
-        return MaterialPageRoute(builder: (context) {
-          return NotFoundPage();
-        });
+      home: HomePage(),
+//      initialRoute: '/',
+//      routes: <String, WidgetBuilder>{
+//        '/': (context) => HomePage(),
+//        '/second': (context) => SecondHome(),
+//      },
+//      onUnknownRoute: (RouteSettings settings) {
+//        String unknownRoute = settings.name;
+//        print(unknownRoute);
+//        return MaterialPageRoute(builder: (context) {
+//          return NotFoundPage();
+//        });
+//      },
+      onGenerateRoute: (RouteSettings settings) {
+        switch (settings.name) {
+          case '/':
+//            return MaterialPageRoute(builder: (context) => HomePage());
+            return SlideRightRoute(widget: HomePage());
+            break;
+          case '/second':
+//            return MaterialPageRoute(builder: (context) => SecondHome());
+            return SlideRightRoute(widget: SecondHome());
+            break;
+        }
       },
     ),
   );
@@ -75,4 +87,33 @@ class NotFoundPage extends StatelessWidget {
       ),
     );
   }
+}
+
+class SlideRightRoute extends PageRouteBuilder {
+  final Widget widget;
+
+  SlideRightRoute({this.widget})
+      : super(
+          pageBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+          ) {
+            return widget;
+          },
+          transitionsBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+            Widget child,
+          ) {
+            return SlideTransition(
+              position: Tween<Offset>(
+                begin: const Offset(1.0, 0.0),
+                end: Offset.zero,
+              ).animate(animation),
+              child: child,
+            );
+          },
+        );
 }
